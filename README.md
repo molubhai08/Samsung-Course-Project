@@ -47,33 +47,6 @@ The platform addresses the growing need for accessible mental health support by 
 - Responsive layouts
 - Accessible and user-friendly
 
----
-
-## 🎬 Demo
-
-### Screenshots
-
-**Home Page**
-```
-Professional landing page with feature overview and CTAs
-```
-
-**Chatbot Interface**
-```
-Real-time chat with emotion badges (Positive/Negative/Neutral)
-```
-
-**Emotion Dashboard**
-```
-Interactive timeline graph showing sentiment trends over time
-```
-
-**Journal**
-```
-Clean interface for writing and viewing past entries
-```
-
----
 
 ## 🛠️ Technology Stack
 
@@ -367,24 +340,6 @@ We welcome contributions! Please follow these steps:
 | Negative | Anger, sadness, fear | Red |
 | Neutral | Calm, neutral, confusion | Gray |
 
----
-
-## 🔒 Privacy & Security
-
-- All conversations are private and encrypted
-- No data sharing with third parties
-- User data stored securely in database
-- CSRF protection on all forms
-- Password hashing with Django's built-in system
-- Session-based authentication
-
----
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
 
 ## 🙏 Acknowledgments
 
