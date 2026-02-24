@@ -1,9 +1,11 @@
 from django.shortcuts import render ,redirect
-
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User 
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth import login , authenticate
+from django.contrib.auth.decorators import login_required
+from .models import *
 
 # Create your views here.
 def home(request):
@@ -61,3 +63,21 @@ def register(request):
 
 def landing(request):
     return render(request , 'landing.html')
+
+
+
+@login_required
+def journal(request):
+
+    if request.method == "POST":
+        text = request.POST.get('j')
+
+        Journal.objects.create(
+            user = request.user,
+            text = text
+        )
+
+        messages.success(request , 'Journal Submitted')
+        return redirect('journal')
+
+    return render(request , 'journal.html')
