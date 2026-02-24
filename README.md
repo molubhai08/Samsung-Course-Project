@@ -1,21 +1,6 @@
 # MindSpace - Emotional Wellness Platform
 
 
-## 📋 Table of Contents
-
-- [Overview](#overview)
-- [Features](#features)
-- [Demo](#demo)
-- [Technology Stack](#technology-stack)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [API Documentation](#api-documentation)
-- [Team](#team)
-- [Contributing](#contributing)
-- [License](#license)
-
----
 
 ## 🌟 Overview
 
@@ -40,7 +25,7 @@ The platform addresses the growing need for accessible mental health support by 
 ### 🎭 Emotion Detection
 - BERT-based emotion classification
 - Real-time analysis of user messages
-- 87% accuracy on test dataset
+- 70% accuracy on test dataset
 - Three emotion categories: Positive, Negative, Neutral
 
 ### 📊 Interactive Dashboard
@@ -343,27 +328,6 @@ Authorization: Session
 j=Today was a good day. I accomplished a lot.
 ```
 
----
-
-## 👥 Team
-
-### Development Team
-
-| Name | Role | Responsibilities |
-|------|------|-----------------|
-| **Yash** | Data Scientist | Data cleaning, EDA, visualization |
-| **Sarthak** | ML Engineer | Model training, optimization, deployment |
-| **Liesha** | AI Engineer | LLM integration, prompt engineering |
-| **Pakhi** | UI/UX Designer | Interface design, user experience |
-| **Shreyansh** | Backend Developer | Django development, API design |
-
-### Contact
-
-For questions or support, please contact:
-- Email: support@mindspace.app
-- GitHub Issues: [Create an issue](https://github.com/yourusername/mindspace/issues)
-
----
 
 ## 🤝 Contributing
 
@@ -390,8 +354,8 @@ We welcome contributions! Please follow these steps:
 
 - **Architecture**: BERT (bert-base-uncased)
 - **Training Data**: GoEmotions (58,000+ samples)
-- **Test Accuracy**: 87.3%
-- **Macro F1-Score**: 0.78
+- **Test Accuracy**: 70.3%
+- **Macro F1-Score**: 0.65
 - **Inference Time**: ~50ms per message (CPU)
 - **Model Size**: 420MB
 
