@@ -3,13 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>MindSpace - Emotional Wellness Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+        .navbar {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2563eb;
+        }
+        .nav-btn {
+            padding: 0.6rem 1.5rem;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        .nav-btn:hover {
+            background: #1d4ed8;
+        }
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        .hero p {
+            font-size: 1.25rem;
+            color: #6b7280;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        .btn-primary {
+            padding: 1rem 2rem;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            padding: 1rem 2rem;
+            background: white;
+            color: #2563eb;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border: 2px solid #2563eb;
+            transition: all 0.2s;
+        }
+        .btn-secondary:hover {
+            background: #eff6ff;
+            transform: translateY(-2px);
+        }
+        .features {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.1);
+        }
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .feature-card h3 {
+            font-size: 1.5rem;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        .feature-card p {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+        .stats {
+            background: white;
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+        .stat-item h4 {
+            font-size: 2.5rem;
+            color: #2563eb;
+            margin-bottom: 0.5rem;
+        }
+        .stat-item p {
+            color: #6b7280;
+            font-size: 1rem;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello</h1>
-    <h2>Login from Here</h2>
-    <a href="{% url 'login' %}">
-    <button>Click here</button>
-</a>
+    <nav class="navbar">
+        <div class="logo">MindSpace</div>
+        <a href="{% url 'login' %}" class="nav-btn">Sign In</a>
+    </nav>
+
+    <section class="hero">
+        <h1>Your Personal Emotional Wellness Companion</h1>
+        <p>Track your emotions, chat with an AI therapist, and gain insights into your mental well-being through data-driven analysis.</p>
+        <div class="cta-buttons">
+            <a href="{% url 'register' %}" class="btn-primary">Get Started Free</a>
+            <a href="{% url 'login' %}" class="btn-secondary">Sign In</a>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature-card">
+            <div class="feature-icon">💬</div>
+            <h3>AI Therapy Chat</h3>
+            <p>Engage in meaningful conversations with an empathetic AI therapist available 24/7 to listen and support you.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Emotion Analytics</h3>
+            <p>Visualize your emotional patterns over time with interactive charts and gain insights into your mental health trends.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📔</div>
+            <h3>Private Journal</h3>
+            <p>Document your thoughts and feelings in a secure, private space designed for self-reflection and growth.</p>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="stat-item">
+            <h4>100%</h4>
+            <p>Private & Secure</p>
+        </div>
+        <div class="stat-item">
+            <h4>24/7</h4>
+            <p>Always Available</p>
+        </div>
+        <div class="stat-item">
+            <h4>AI-Powered</h4>
+            <p>Advanced Technology</p>
+        </div>
+    </section>
 </body>
 </html>

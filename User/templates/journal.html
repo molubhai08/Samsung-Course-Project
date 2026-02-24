@@ -3,26 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Journal - MindSpace</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f3f4f6;
+            min-height: 100vh;
+        }
+        .navbar {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2563eb;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+        .nav-links a {
+            color: #6b7280;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .nav-links a:hover {
+            background: #f3f4f6;
+            color: #2563eb;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .page-header {
+            margin-bottom: 2rem;
+        }
+        .page-header h1 {
+            font-size: 2rem;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        .page-header p {
+            color: #6b7280;
+        }
+        .form-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+        .form-container h2 {
+            margin-bottom: 1rem;
+            color: #1f2937;
+            font-size: 1.25rem;
+        }
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            resize: vertical;
+            outline: none;
+            transition: border 0.2s;
+        }
+        textarea:focus {
+            border-color: #2563eb;
+        }
+        button {
+            margin-top: 1rem;
+            padding: 0.75rem 2rem;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #1d4ed8;
+        }
+        .message {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #10b981;
+        }
+        .journals-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .journals-container h2 {
+            margin-bottom: 1.5rem;
+            color: #1f2937;
+            font-size: 1.25rem;
+        }
+        .journal-entry {
+            background: #f9fafb;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 3px solid #2563eb;
+        }
+        .journal-date {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+        .journal-text {
+            color: #374151;
+            line-height: 1.6;
+        }
+        .no-journals {
+            text-align: center;
+            color: #9ca3af;
+            padding: 3rem 1rem;
+        }
+    </style>
 </head>
 <body>
-    <h1>Add Text Here</h1>
+    <nav class="navbar">
+        <div class="logo">MindSpace</div>
+        <div class="nav-links">
+            <a href="{% url 'chatbot' %}">Chat</a>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'landing' %}">Home</a>
+        </div>
+    </nav>
 
-<form method="POST" action="{% url 'journal' %}">
-    {% csrf_token %}
+    <div class="container">
+        <div class="page-header">
+            <h1>Personal Journal</h1>
+            <p>Document your thoughts and feelings in a private space</p>
+        </div>
 
-    <textarea name="j"></textarea><br><br>
+        {% for message in messages %}
+            <div class="message">{{ message }}</div>
+        {% endfor %}
 
-    <button type="submit">Submit</button>
-</form>
+        <div class="form-container">
+            <h2>New Entry</h2>
+            <form method="POST" action="{% url 'journal' %}">
+                {% csrf_token %}
+                <textarea name="j" placeholder="Write your thoughts here..." required></textarea>
+                <button type="submit">Save Entry</button>
+            </form>
+        </div>
 
-{% for message in messages %}
-    <p>{{ message }}</p>
-{% endfor %}
-
-<h2>Go to Landing</h2>
-<a href="{% url 'landing' %}">
-    <button>Landing</button>
-</a>
+        <div class="journals-container">
+            <h2>Past Entries</h2>
+            {% if journals %}
+                {% for journal in journals %}
+                    <div class="journal-entry">
+                        <div class="journal-date">{{ journal.date|date:"F d, Y" }}</div>
+                        <div class="journal-text">{{ journal.text }}</div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-journals">No journal entries yet. Start writing above!</div>
+            {% endif %}
+        </div>
+    </div>
 </body>
 </html>

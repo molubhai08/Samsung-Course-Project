@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - MindSpace</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f3f4f6;
+            min-height: 100vh;
+        }
+        .navbar {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2563eb;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+        .nav-links a {
+            color: #6b7280;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .nav-links a:hover {
+            background: #f3f4f6;
+            color: #2563eb;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .page-header {
+            margin-bottom: 2rem;
+        }
+        .page-header h1 {
+            font-size: 2rem;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        .page-header p {
+            color: #6b7280;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .stat-card h3 {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        .stat-card p {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+        .chart-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .chart-header h2 {
+            font-size: 1.25rem;
+            color: #1f2937;
+        }
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .slider-container label {
+            color: #6b7280;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        #timeRange {
+            width: 200px;
+            height: 6px;
+            border-radius: 3px;
+            background: #e5e7eb;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        #timeRange::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #2563eb;
+            cursor: pointer;
+        }
+        #timeRange::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #2563eb;
+            cursor: pointer;
+            border: none;
+        }
+        #rangeValue {
+            font-weight: 600;
+            color: #2563eb;
+            min-width: 60px;
+        }
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">MindSpace</div>
+        <div class="nav-links">
+            <a href="{% url 'chatbot' %}">Chat</a>
+            <a href="{% url 'journal' %}">Journal</a>
+            <a href="{% url 'landing' %}">Home</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Emotion Dashboard</h1>
+            <p>Track your emotional patterns and trends over time</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <h3>Average Sentiment</h3>
+                <p id="avgSentiment">--</p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Messages</h3>
+                <p id="totalMessages">--</p>
+            </div>
+            <div class="stat-card">
+                <h3>Positive Days</h3>
+                <p id="positiveDays">--</p>
+            </div>
+            <div class="stat-card">
+                <h3>Days Tracked</h3>
+                <p id="daysTracked">--</p>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2>Sentiment Timeline</h2>
+                <div class="slider-container">
+                    <label for="timeRange">Time Range:</label>
+                    <input type="range" id="timeRange" min="7" max="90" value="30" step="1">
+                    <span id="rangeValue">30 days</span>
+                </div>
+            </div>
+            
+            <canvas id="emotionChart"></canvas>
+            
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #10b981;"></div>
+                    <span>Positive</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #ef4444;"></div>
+                    <span>Negative</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #6b7280;"></div>
+                    <span>Neutral</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let chart;
+        const timeRangeSlider = document.getElementById('timeRange');
+        const rangeValue = document.getElementById('rangeValue');
+
+        timeRangeSlider.addEventListener('input', (e) => {
+            const days = e.target.value;
+            rangeValue.textContent = `${days} days`;
+            loadEmotionData(days);
+        });
+
+        async function loadEmotionData(days = 30) {
+            try {
+                const response = await fetch(`{% url 'emotion_data' %}?days=${days}`);
+                const result = await response.json();
+                const data = result.data;
+
+                if (data.length === 0) {
+                    updateStats(0, 0, 0, 0);
+                    if (chart) {
+                        chart.data.labels = [];
+                        chart.data.datasets[0].data = [];
+                        chart.update();
+                    }
+                    return;
+                }
+
+                const labels = data.map(d => {
+                    const date = new Date(d.date);
+                    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                });
+                
+                const sentimentScores = data.map(d => d.sentiment_score);
+                const positiveScores = data.map(d => d.positive);
+                const negativeScores = data.map(d => d.negative);
+                const neutralScores = data.map(d => d.neutral);
+
+                const avgSentiment = (sentimentScores.reduce((a, b) => a + b, 0) / sentimentScores.length).toFixed(1);
+                const totalMessages = data.reduce((sum, d) => sum + d.message_count, 0);
+                const positiveDays = data.filter(d => d.sentiment_score > 0).length;
+                const daysTracked = data.length;
+
+                updateStats(avgSentiment, totalMessages, positiveDays, daysTracked);
+                updateChart(labels, sentimentScores, positiveScores, negativeScores, neutralScores);
+
+            } catch (error) {
+                console.error('Failed to load emotion data:', error);
+            }
+        }
+
+        function updateStats(avgSentiment, totalMessages, positiveDays, daysTracked) {
+            document.getElementById('avgSentiment').textContent = avgSentiment;
+            document.getElementById('totalMessages').textContent = totalMessages;
+            document.getElementById('positiveDays').textContent = positiveDays;
+            document.getElementById('daysTracked').textContent = daysTracked;
+        }
+
+        function updateChart(labels, sentimentScores, positiveScores, negativeScores, neutralScores) {
+            const ctx = document.getElementById('emotionChart').getContext('2d');
+
+            if (chart) {
+                chart.destroy();
+            }
+
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Sentiment Score',
+                        data: sentimentScores,
+                        borderColor: '#2563eb',
+                        backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true,
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        pointBackgroundColor: '#2563eb',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    aspectRatio: 2.5,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                afterLabel: function(context) {
+                                    const index = context.dataIndex;
+                                    return [
+                                        `Positive: ${positiveScores[index]}%`,
+                                        `Negative: ${negativeScores[index]}%`,
+                                        `Neutral: ${neutralScores[index]}%`
+                                    ];
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            min: -100,
+                            max: 100,
+                            grid: {
+                                color: '#f3f4f6'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value;
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Sentiment Score',
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                text: 'Date',
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        loadEmotionData(30);
+    </script>
+</body>
+</html>

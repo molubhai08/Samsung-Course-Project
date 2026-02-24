@@ -20,9 +20,13 @@ from User.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('' , home , name="home"),
-    path('login/' , login_view , name="login"),
-    path('register/' , register , name="register"),
-    path('landing/' , landing , name="landing"),
-    path('journal/' , journal , name="journal"),
+    path('', home, name="home"),
+    path('login/', login_view, name="login"),
+    path('register/', register, name="register"),
+    path('landing/', landing, name="landing"),
+    path('journal/', journal, name="journal"),
+    path('chatbot/', chatbot_view, name="chatbot"),
+    path('api/send-message/', send_message, name="send_message"),
+    path('dashboard/', dashboard, name="dashboard"),
+    path('api/emotion-data/', get_emotion_data, name="emotion_data"),
 ]

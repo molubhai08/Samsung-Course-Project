@@ -3,11 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Welcome - MindSpace</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f3f4f6;
+            min-height: 100vh;
+        }
+        .navbar {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2563eb;
+        }
+        .user-info {
+            color: #6b7280;
+            font-weight: 500;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        .welcome {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .welcome h1 {
+            font-size: 2.5rem;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        .welcome p {
+            font-size: 1.125rem;
+            color: #6b7280;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-color: #2563eb;
+        }
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .feature-card h3 {
+            font-size: 1.5rem;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        .feature-card p {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+        .cta {
+            text-align: center;
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            background: #2563eb;
+            color: white;
+            border-radius: 8px;
+            font-weight: 600;
+            display: inline-block;
+        }
+    </style>
 </head>
 <body>
-    <h1>Authentication Complete!</h1>
-    <h2>Write Journal</h2>
-    <a href = "{% url 'journal' %}"><button>Journal</button></a>
+    <nav class="navbar">
+        <div class="logo">MindSpace</div>
+        <div class="user-info">Welcome, {{ user.username }}</div>
+    </nav>
+
+    <div class="container">
+        <div class="welcome">
+            <h1>Welcome to Your Wellness Space</h1>
+            <p>Choose where you'd like to start today</p>
+        </div>
+        
+        <div class="features">
+            <a href="{% url 'chatbot' %}" class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>Therapy Chat</h3>
+                <p>Talk to an empathetic AI therapist about your thoughts and feelings in a safe, judgment-free environment.</p>
+                <div class="cta">Start Chatting</div>
+            </a>
+            
+            <a href="{% url 'dashboard' %}" class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Emotion Dashboard</h3>
+                <p>View your emotional timeline and track patterns in your mental well-being over days and weeks.</p>
+                <div class="cta">View Dashboard</div>
+            </a>
+            
+            <a href="{% url 'journal' %}" class="feature-card">
+                <div class="feature-icon">📔</div>
+                <h3>Personal Journal</h3>
+                <p>Write and reflect on your day in a private journal space. Review past entries anytime.</p>
+                <div class="cta">Open Journal</div>
+            </a>
+        </div>
+    </div>
 </body>
 </html>
