@@ -1,19 +1,5 @@
 # MindSpace - Emotional Wellness Platform
 
-<div align="center">
-
-![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
-![Django](https://img.shields.io/badge/Django-5.2-green.svg)
-![License](https://img.shields.io/badge/License-MIT-yellow.svg)
-![Status](https://img.shields.io/badge/Status-Active-success.svg)
-
-**An AI-powered emotional wellness platform combining conversational therapy, emotion detection, and data-driven insights.**
-
-[Features](#features) • [Demo](#demo) • [Installation](#installation) • [Usage](#usage) • [Team](#team)
-
-</div>
-
----
 
 ## 📋 Table of Contents
 
